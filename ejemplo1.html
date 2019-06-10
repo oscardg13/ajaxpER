@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>Ejemplo1</title>
+<script type="text/javascript">
+//Creamos el objeto XMLHttpRequest mediante una funci&oacute;n:
+function creaObjetoAjax () { 
+         var obj; //variable que recoger&aacute; el objeto
+         if (window.XMLHttpRequest) { //c&oacute;digo para mayor&iacute;a de navegadores
+            obj=new XMLHttpRequest();
+            }
+         else { //para IE 5 y IE 6
+            obj=new ActiveXObject(Microsoft.XMLHTTP);
+            }
+         return obj; //devolvemos objeto
+         }
+docTxt=creaObjetoAjax(); //llamar a funcion crear objeto.
+docTxt.open("GET","ejemplo1.txt",true); //preparar petici&oacute;n del objeto
+docTxt.onreadystatechange=leerArchivo; //indicar d&oacute;nde recoger la respuesta
+docTxt.send() //enviar petici&oacute;n
+//funci&oacute;n que recoge la respuesta para poder utilizarla
+function leerArchivo() {  
+         if (docTxt.readyState == 4) {
+            if (docTxt.status == 200) {
+               texto=docTxt.responseText;
+               }
+            }
+         }
+//funci&oacute;n para bot&oacute;n "Ver texto"
+function verTexto() {
+         ver=document.getElementById("respuesta");
+         ver.innerHTML=texto;
+         }
+//funci&oacute;n para bot&oacute;n "Ocultar texto"			 
+function ocultarTexto() {
+         nover=document.getElementById("respuesta");
+         nover.innerHTML="";
+         }			 
+</script>
+</head>
+<body>
+<h1>Ver archivo con ajax</h1>
+<p><input type="button" value="ver texto" onclick="verTexto()" />
+   <input type="button" value="ocultar texto" onclick="ocultarTexto()" />  
+</p>
+<div id="respuesta"></div>
+
+</body>
+</html>
